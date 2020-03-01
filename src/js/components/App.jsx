@@ -5,18 +5,12 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-        html: ''
+      header: ''
     }
   };
 
-  // _fecth() {
-  //   fetch('https://github.com/').then(res => {
-  //     console.log(res.headers.raw());
-  //   })
-  // }
-
   _fecth_local() {
-    const f = fetch(
+    fetch(
       'http://vmdev:8081/fetch',
       {
         method: "GET"
@@ -25,46 +19,25 @@ class App extends React.Component {
           ,'Content-Type': 'application/json; charset=utf-8'
         }
       }
-    ).then(function(res) {
-      // console.log('Request failed At ', res.json());
-      // console.log('Request res At ', res.json());
-      return res.json();
-      // return res.json().then(data => {
-      //   return data;
-      //   // console.log(data);
-      //   // this.setState({ html: data.message }); 
-      // })
-    // }).then(function(data) {
-    //   console.log('Request data At ', data);
-      // return data;
+    ).then((response) => response.json())
+    .then((responseJson) => {
+      // console.log('Request failed At ', responseJson);
+      this.setState({ header: responseJson.message.toString() })
+      // console.log(this.state);
+      this.forceUpdate();
     }).catch(function(error) {
       console.log('Request failed At ', error);
     });
-    console.log(f);
-    f.then(data => {
-      this.setState({ html: data.message }); 
-    }).catch(function(error) {
-      console.log('Request data failed At ', error);
-    });
-    // fetch('http://vmdev:8081/fetch',
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'accept':'application/json'
-    //     }
-    // }).then(res => {
-    //   console.log(res.json())
-    //   this.setState({ html: res.json() });
-    // }).catch(error => { console.log(error); })
+  }
+
+  componentWillMount() {
+    this._fecth_local();
   }
 
   render() {
-    // this._fecth()
-    this._fecth_local()
     return (
       <div>
-        { this.state.html }
+        { this.state.header }
       </div>
     );
   }

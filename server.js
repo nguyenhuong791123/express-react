@@ -9,17 +9,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve('./dist/index.html'));
 });
 
-// app.get("/fetch", function(req,res){
-//   res.json({
-//       message: fetch('https://github.com/').then(res => {
-//           return res.ok
-//       })
-//   });
-// });
-
 app.get("/fetch", async function(req,res){
-  // res.header('Content-Type', 'application/json; charset=utf-8')
-  // res.send('{ "message": "hello world!" }')
   res.json({
       message: await fetch('https://github.com/').then(res => {
           return res.ok
